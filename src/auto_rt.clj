@@ -32,6 +32,12 @@
   (println (.toString throwable))
   (exit))
 
+(def ^:dynamic *streaming-callback*
+  (AsyncStreamingCallback.
+    on-bodypart
+    on-failure
+    on-exception))
+
 (defn -main
   "I don't do a whole lot."
   [& args]
