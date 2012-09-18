@@ -20,6 +20,11 @@
   [response baos]
   (println (.toString baos)))
 
+(defn on-failure
+  "Called when the streaming api returns a 4xx response"
+  [response]
+  (println response)
+  (exit))
 
 (defn -main
   "I don't do a whole lot."
