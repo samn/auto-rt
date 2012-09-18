@@ -26,6 +26,12 @@
   (println response)
   (exit))
 
+(defn on-exception
+  "Called when an exception is thrown"
+  [response throwable]
+  (println (.toString throwable))
+  (exit))
+
 (defn -main
   "I don't do a whole lot."
   [& args]
