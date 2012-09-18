@@ -2,7 +2,7 @@
   (:require [twitter.oauth :as oauth]
             [twitter.api.restful :as restful]
             [twitter.api.streaming :as streaming])
-  (:import (twitter.callbacks.protocols AsyncStreamingCallback)))
+  (:import (twitter.callbacks.protocols AsyncStreamingCallback SyncStreamingCallback)))
 
 (defn env
   "Retrieve the value of var-name from the system environment, or nil"
@@ -32,13 +32,18 @@
   (println (.toString throwable))
   (exit))
 
-(def ^:dynamic *streaming-callback*
+(def ^:dynamic *async-streaming-callback*
   (AsyncStreamingCallback.
     on-bodypart
     on-failure
     on-exception))
 
+(def ^:dynamic *sync-streaming-callback*
+  (SyncStreamingCallback.
+    on-bodypart
+    on-failure
+    on-exception))
+
 (defn -main
-  "I don't do a whole lot."
   [& args]
-  (println "Hello, World!"))
+  (streaming/user-stream :oauth-creds *creds* :callbacks *sync-streaming-callback*))
