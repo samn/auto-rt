@@ -9,11 +9,15 @@
   [var-name]
   (System/getenv var-name))
 
-(def ^:dynamic *creds* (make-oauth-creds 
+(def ^:dynamic *creds* (oauth/make-oauth-creds 
                          (env "APP_CONSUMER_KEY")
                          (env "APP_CONSUMER_SECRET")
                          (env "USER_ACCESS_TOKEN")
                          (env "USER_ACCESS_TOKEN_SECRET")))
+
+(defn die!
+  ([] (die! 1))
+  ([code] (System/exit code)))
 
 (defn on-bodypart
   "Called when a new message is received from the streaming api"
@@ -24,13 +28,13 @@
   "Called when the streaming api returns a 4xx response"
   [response]
   (println response)
-  (exit))
+  (die!))
 
 (defn on-exception
   "Called when an exception is thrown"
   [response throwable]
   (println (.toString throwable))
-  (exit))
+  (die!))
 
 (def ^:dynamic *async-streaming-callback*
   (AsyncStreamingCallback.
@@ -46,4 +50,5 @@
 
 (defn -main
   [& args]
+  (println "Startup!")
   (streaming/user-stream :oauth-creds *creds* :callbacks *sync-streaming-callback*))
