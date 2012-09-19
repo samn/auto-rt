@@ -25,7 +25,7 @@
 (defn on-bodypart
   "Called when a new message is received from the streaming api"
   [response baos]
-  (let [tweet (json/parse-string (.toString baos))]
+  (let [tweet (json/parse-string (.toString baos) true)]
     (when (not= *user-id* (get-in tweet [:user :id_str]))
       (restful/retweet-status :oauth-creds *creds* :params {:id (:id_str tweet)}))))
 
