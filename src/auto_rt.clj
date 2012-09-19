@@ -26,6 +26,8 @@
   "Called when a new message is received from the streaming api"
   [response baos]
   (let [tweet (json/parse-string (.toString baos) true)]
+    (println "*user-id*" *user-id*)
+    (println "(get-in tweet [:user :id_str])" (get-in tweet [:user :id_str]))
     (when (not= *user-id* (get-in tweet [:user :id_str]))
       (restful/retweet-status :oauth-creds *creds* :params {:id (:id_str tweet)}))))
 
@@ -56,4 +58,5 @@
 (defn -main
   [& args]
   (println "Startup!")
+  (println "auto-rt for user id" *user-id*)
   (streaming/user-stream :oauth-creds *creds* :callbacks *sync-streaming-callback*))
