@@ -28,6 +28,7 @@
   (let [tweet (json/parse-string (.toString baos) true)]
     (when-let [user (:user tweet)]
       (when (not= *user-id* (:id_str user))
+        (println "Trying to RT status" (:id_str tweet))
         (restful/retweet-status :oauth-creds *creds* :params {:id (:id_str tweet)})))))
 
 (defn on-failure
