@@ -1,7 +1,8 @@
 (ns auto-rt
   (:require [twitter.oauth :as oauth]
             [twitter.api.restful :as restful]
-            [twitter.api.streaming :as streaming])
+            [twitter.api.streaming :as streaming]
+            [cheshire.core :as json])
   (:import (twitter.callbacks.protocols AsyncStreamingCallback SyncStreamingCallback)))
 
 (defn env
