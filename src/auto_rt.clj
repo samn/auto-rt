@@ -3,7 +3,7 @@
             [twitter.api.restful :as restful]
             [twitter.api.streaming :as streaming]
             [cheshire.core :as json])
-  (:import (twitter.callbacks.protocols AsyncStreamingCallback SyncStreamingCallback)))
+  (:import (twitter.callbacks.protocols SyncStreamingCallback)))
 
 (defn env
   "Retrieve the value of var-name from the system environment, or nil"
@@ -42,12 +42,6 @@
   [response throwable]
   (println (.toString throwable))
   (die!))
-
-(def ^:dynamic *async-streaming-callback*
-  (AsyncStreamingCallback.
-    on-bodypart
-    on-failure
-    on-exception))
 
 (def ^:dynamic *sync-streaming-callback*
   (SyncStreamingCallback.
