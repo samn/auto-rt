@@ -1,6 +1,6 @@
 (defproject auto-rt "0.1.0-SNAPSHOT"
-  :description "Poll for mentions and retweet"
-  :url "http://example.com/FIXME"
+  :description "Automatically RT @mentions"
+  :url "https://github.com/samn/auto-rt"
   :min-lein-version "2.0.0"                     
   :main auto-rt 
   :license {:name "Eclipse Public License"

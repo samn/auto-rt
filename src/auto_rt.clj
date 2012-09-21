@@ -32,13 +32,15 @@
         (restful/retweet-status :oauth-creds *creds* :params {:id (:id_str tweet)})))))
 
 (defn on-failure
-  "Called when the streaming api returns a 4xx response"
+  "Called when the streaming api returns a 4xx response.
+   Kill this process and let Heroku bounce it to reconnect."
   [response]
   (println response)
   (die!))
 
 (defn on-exception
-  "Called when an exception is thrown"
+  "Called when an exception is thrown.
+   Kill this process and let Heroku bounce it to reconnect."
   [response throwable]
   (println (.toString throwable))
   (die!))
