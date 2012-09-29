@@ -22,14 +22,20 @@
   ([] (die! 1))
   ([code] (System/exit code)))
 
+(defn valid-user?
+  "Checks that there is a user in the response json, and that it isn't protected"
+  [json]
+  (when-let [user (:user json)]
+    (not (or (= *user-id* (:id_str user))
+             (:protected user)))))
+
 (defn on-bodypart
   "Called when a new message is received from the streaming api"
   [response baos]
   (let [tweet (json/parse-string (.toString baos) true)]
-    (when-let [user (:user tweet)]
-      (when (not= *user-id* (:id_str user))
+    (when (valid-user? tweet)
         (println "Trying to RT status" (:id_str tweet))
-        (restful/retweet-status :oauth-creds *creds* :params {:id (:id_str tweet)})))))
+        (restful/retweet-status :oauth-creds *creds* :params {:id (:id_str tweet)}))))
 
 (defn on-failure
   "Called when the streaming api returns a 4xx response.
