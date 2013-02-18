@@ -1,4 +1,4 @@
-(defproject auto-rt "0.1.0-SNAPSHOT"
+(defproject auto-rt "0.1.1-SNAPSHOT"
   :description "Automatically RT @mentions"
   :url "https://github.com/samn/auto-rt"
   :min-lein-version "2.0.0"                     
