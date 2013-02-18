@@ -34,8 +34,8 @@
   [response baos]
   (let [tweet (json/parse-string (.toString baos) true)]
     (when (valid-user? tweet)
-        (println "Trying to RT status" (:id_str tweet))
-        (restful/retweet-status :oauth-creds *creds* :params {:id (:id_str tweet)}))))
+      (println "Trying to RT status" (:id_str tweet))
+      (restful/statuses-retweet-id :oauth-creds *creds* :params {:id (:id_str tweet)}))))
 
 (defn on-failure
   "Called when the streaming api returns a 4xx response.
